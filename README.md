@@ -15,8 +15,6 @@
 
 👉🏿[2021海华AI挑战赛·中文阅读理解·技术组](https://www.biendata.xyz/competition/haihua_2021])baseline见example文件夹
 
-https://imgchr.com/i/y0FzIs
-
 ![](https://storepica.oss-cn-beijing.aliyuncs.com/image-20210210174305778.png)
 
 #### 环境要求
