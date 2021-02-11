@@ -11,8 +11,8 @@ import random
 import numpy as np
 from datetime import time
 
-from ToyBert.utils import load_data, format_time
-from ToyBert.metric import flat_f1
+from ToyBert.utils import load_data, format_time, fix_seed
+from ToyBert.metric import flat_f1, flat_accuracy
 from ToyBert.tokenization import process
 from ToyBert.model import BertForSequenceClassification
 from transformers import AdamW, get_linear_schedule_with_warmup, BertTokenizer

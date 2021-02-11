@@ -13,11 +13,11 @@ from ToyBert.utils import InputFeature, select_field
 def process(data, name, batch_size, max_length, threshold=None):
     '''
     Parameters@
-      context: list, a matrix which dimensional equals to two
-      tokenizer: tokenizer, as its name, use to encode sentence
+      data: list, a list of many InputExample instances
+      tokenizer: tokenizer, as its name, use to encode items
       batch_size: int, batch size of one train
       max_length: int, max length of sequence
-      threshold: float, use to split train data, range from 0 to 1
+      threshold: float, use to split train data, range from 0 to 1, default 0.8
 
     Returns@
       dataloader of train set and valid set while need to split data, otherwise, test set
@@ -47,6 +47,7 @@ def process(data, name, batch_size, max_length, threshold=None):
             token_type_ids = encode_dic['token_type_ids'].tolist()[0]
 
             choices_features.append((input_ids, attention_mask, token_type_ids))
+        # processed into four options
         for j in range(4-count):
             input_ids = [0] * max_length
             attention_mask = [0] * max_length

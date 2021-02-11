@@ -10,15 +10,6 @@ from torch.nn import CrossEntropyLoss, MSELoss
 
 
 
-# a defined class of model output
-class ModelOutput(object):
-  def __init__(self, loss, logits, hidden_states=None, attentions=None):
-      self.loss = loss
-      self.logits = logits
-      self.hidden_states = hidden_states
-      self.attentions = attentions
-
-
 # It could use for multiple choice reading comprehension
 class BertConcatHiddenForQA(nn.Module):
     def __init__(self, name, hidden_num):

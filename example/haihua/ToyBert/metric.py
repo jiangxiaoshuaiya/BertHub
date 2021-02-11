@@ -17,7 +17,6 @@ def flat_accuracy(logits, labels):
 
 
 def flat_f1(logits, labels):
-
     logits = logits.detach().cpu().numpy()
     labels = labels.cpu().numpy()
     pred_flat = np.argmax(logits, axis=1).flatten()

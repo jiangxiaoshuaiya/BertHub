@@ -75,7 +75,7 @@ def main():
         start_train = time.time()
         total_train_loss = 0
 
-        fgm = FGM(bert) #*
+        # fgm = FGM(bert) #*
         for step, batch in enumerate(train_dataloader):
 
             if step % 200 == 0:

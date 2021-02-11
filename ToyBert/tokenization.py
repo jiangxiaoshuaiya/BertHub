@@ -6,6 +6,7 @@
 # @Moto    : 良好的阶段性收获是坚持的重要动力之一
 # @Contract: Mason_Jay@163.com
 import torch
+import numpy as np
 from transformers import BertTokenizer
 from torch.utils.data import DataLoader, SequentialSampler, RandomSampler, random_split, TensorDataset
 
