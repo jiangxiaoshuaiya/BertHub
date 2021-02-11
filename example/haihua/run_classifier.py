@@ -15,6 +15,7 @@ from ToyBert.metric import flat_f1, flat_accuracy
 from transformers import AdamW, get_linear_schedule_with_warmup, BertTokenizer
 from ToyBert.utils import load_data, format_time, fix_seed
 from ToyBert.tokenization import process
+from ToyBert.adversarial import FGM
 from transformers import BertConfig, BertForMultipleChoice
 
 
@@ -73,9 +74,11 @@ def main():
         bert.train()
         start_train = time.time()
         total_train_loss = 0
+
+        fgm = FGM(bert) #*
         for step, batch in enumerate(train_dataloader):
 
-            if step % 100 == 0:
+            if step % 200 == 0:
                 elapsed = format_time(time.time() - start_train)
                 print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_dataloader), elapsed))
 
@@ -86,12 +89,19 @@ def main():
 
             outputs = bert(batch_input_ids,
                                 batch_attention_masks, batch_token_type_ids, labels=batch_labels)
-    
-            del batch_input_ids, batch_token_type_ids, batch_attention_masks, batch_labels
-
             bert.zero_grad()
             outputs.loss.backward()
             torch.nn.utils.clip_grad_norm_(bert.parameters(), 1.0)
+
+            # score down
+            # fgm.attack() #*
+            # outputs = bert(batch_input_ids,
+            #                     batch_attention_masks, batch_token_type_ids, labels=batch_labels) #*
+            # loss_adv = outputs.loss #*
+            # loss_adv.backward() #*
+            # fgm.restore() #*
+
+            del batch_input_ids, batch_token_type_ids, batch_attention_masks, batch_labels
 
             optimizer.step()
             scheduler.step()
@@ -109,7 +119,7 @@ def main():
         total_eval_f1 = 0
         for step, batch in enumerate(valid_dataloader):
 
-            if step % 100 == 0:
+            if step % 200 == 0:
                 elapsed = format_time(time.time() - start_train)
                 print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(valid_dataloader), elapsed))
 
